@@ -14,7 +14,7 @@ Dna::Dna(int length, Threefry::Gen &&rng) : seq_(length) {
 }
 
 int Dna::length() const {
-    return seq_.size();
+    return (int)seq_.size();
 }
 
 void Dna::save(gzFile backup_file) {
@@ -27,7 +27,9 @@ void Dna::load(gzFile backup_file) {
     int dna_length;
     gzread(backup_file, &dna_length, sizeof(dna_length));
 
-    char tmp_seq[dna_length];
+    std::vector<char> tmp_seq_buf(dna_length);
+    char* const tmp_seq(tmp_seq_buf.data());
+
     gzread(backup_file, tmp_seq, dna_length * sizeof(tmp_seq[0]));
 
     seq_ = std::vector<char>(tmp_seq, tmp_seq + dna_length);
@@ -85,7 +87,7 @@ void Dna::do_duplication(int pos_1, int pos_2, int pos_3) {
     // Duplicate segment [pos_1; pos_2[ and insert the duplicate before pos_3
     char *duplicate_segment = NULL;
 
-    int32_t seg_length;
+    //int32_t seg_length;
 
     if (pos_1 < pos_2) {
         //
@@ -127,8 +129,8 @@ int Dna::promoter_at(int pos) {
 
     for (int motif_id = 0; motif_id < PROM_SIZE; motif_id++) {
         int search_pos = pos + motif_id;
-        if (search_pos >= seq_.size())
-            search_pos -= seq_.size();
+        if (search_pos >= (int)seq_.size())
+            search_pos -= (int)seq_.size();
         // Searching for the promoter
         prom_dist[motif_id] =
                 PROM_SEQ[motif_id] == seq_[search_pos] ? 0 : 1;
@@ -193,8 +195,8 @@ bool Dna::shine_dal_start(int pos) {
     for (int k = 0; k < SHINE_DAL_SIZE + CODON_SIZE; k++) {
         k_t = k >= SHINE_DAL_SIZE ? k + SD_START_SPACER : k;
         t_pos = pos + k_t;
-        if (t_pos >= seq_.size())
-            t_pos -= seq_.size();
+        if (t_pos >= (int)seq_.size())
+            t_pos -= (int)seq_.size();
 
         if (seq_[t_pos] == SHINE_DAL_SEQ[k_t]) {
             start = true;
@@ -213,8 +215,8 @@ bool Dna::protein_stop(int pos) {
 
     for (int k = 0; k < CODON_SIZE; k++) {
         t_k = pos + k;
-        if (t_k >= seq_.size())
-            t_k -= seq_.size();
+        if (t_k >= (int)seq_.size())
+            t_k -= (int)seq_.size();
 
         if (seq_[t_k] == PROTEIN_END[k]) {
             is_protein = true;
@@ -234,8 +236,8 @@ int Dna::codon_at(int pos) {
 
     for (int i = 0; i < CODON_SIZE; i++) {
         t_pos = pos + i;
-        if (t_pos >= seq_.size())
-            t_pos -= seq_.size();
+        if (t_pos >= (int)seq_.size())
+            t_pos -= (int)seq_.size();
         if (seq_[t_pos] == '1')
             value += 1 << (CODON_SIZE - i - 1);
     }

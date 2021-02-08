@@ -5,7 +5,7 @@
 void Threefry::save(gzFile backup_file) const {
   Threefry123::key_type::value_type seed = seed_[1];
   gzwrite(backup_file, &seed, sizeof(seed));
-  gzwrite(backup_file, counters_.data(), counters_.size() * sizeof(counters_[0]));
+  gzwrite(backup_file, counters_.data(), (unsigned int)(counters_.size() * sizeof(counters_[0])));
 }
 
 Threefry::Threefry(int X, int Y, gzFile backup_file)
@@ -16,8 +16,10 @@ Threefry::Threefry(int X, int Y, gzFile backup_file)
   seed_[0] = 0;
   seed_[1] = seed;
 
-  crt_value_type tmp_counters[counters_.size()];
-  gzread(backup_file, tmp_counters, counters_.size() * sizeof(tmp_counters[0]));
+  std::vector<crt_value_type> tmp_counters_buf(counters_.size());
+  crt_value_type* const tmp_counters(tmp_counters_buf.data());
+
+  gzread(backup_file, tmp_counters, (unsigned int)(counters_.size() * sizeof(tmp_counters[0])));
 
   counters_ = std::vector<crt_value_type>(tmp_counters, tmp_counters + counters_.size());
 }

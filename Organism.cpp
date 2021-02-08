@@ -255,7 +255,7 @@ void Organism::compute_protein() {
     int resize_to = 0;
 
     for (int rna_idx = 0; rna_idx < rna_count_; rna_idx++) {
-        resize_to += rnas[rna_idx]->start_prot.size();
+        resize_to += (int)rnas[rna_idx]->start_prot.size();
     }
 
     proteins.resize(resize_to);
