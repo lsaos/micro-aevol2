@@ -22,7 +22,7 @@ public:
 
     virtual void load(int t) = 0;
 
-    virtual void run_evolution(int nb_gen) = 0;
+    virtual void run_evolution(int nb_gen, int nb_core) = 0;
 };
 
 

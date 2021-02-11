@@ -41,50 +41,50 @@
  */
 class ExpManager : public Abstract_ExpManager {
 #ifdef USE_CUDA
-    friend class cuExpManager;
+	friend class cuExpManager;
 #endif
 public:
-    ExpManager(int grid_height, int grid_width, int seed, double mutation_rate, int init_length_dna,
-               int backup_step);
+	ExpManager(int grid_height, int grid_width, int seed, double mutation_rate, int init_length_dna,
+		int backup_step);
 
-    explicit ExpManager(int time);
+	explicit ExpManager(int time);
 
-    ~ExpManager() override;
+	~ExpManager() override;
 
-    void save(int t) const final;
+	void save(int t) const final;
 
-    void load(int t) final;
+	void load(int t) final;
 
-    void run_evolution(int nb_gen) override;
+	void run_evolution(int nb_gen, int nb_core) override;
 
 private:
-    void run_a_step();
+	void run_a_step();
 
-    void prepare_mutation(int indiv_id) const;
+	void prepare_mutation(int indiv_id) const;
 
-    void selection(int indiv_id) const;
+	void selection(int indiv_id) const;
 
-    std::shared_ptr<Organism> *internal_organisms_;
-    std::shared_ptr<Organism> *prev_internal_organisms_;
-    std::shared_ptr<Organism> best_indiv;
+	std::shared_ptr<Organism>* internal_organisms_;
+	std::shared_ptr<Organism>* prev_internal_organisms_;
+	std::shared_ptr<Organism> best_indiv;
 
-    int *next_generation_reproducer_;
-    DnaMutator **dna_mutator_array_;
+	int* next_generation_reproducer_;
+	DnaMutator** dna_mutator_array_;
 
-    int nb_indivs_;
+	int nb_indivs_;
 
-    int seed_;
-    std::unique_ptr<Threefry> rng_;
+	int seed_;
+	std::unique_ptr<Threefry> rng_;
 
-    double *target;
+	double* target;
 
-    Stats *stats_best = nullptr;
-    Stats *stats_mean = nullptr;
+	Stats* stats_best = nullptr;
+	Stats* stats_mean = nullptr;
 
-    int grid_height_;
-    int grid_width_;
+	int grid_height_;
+	int grid_width_;
 
-    double mutation_rate_;
+	double mutation_rate_;
 
-    int backup_step_;
+	int backup_step_;
 };

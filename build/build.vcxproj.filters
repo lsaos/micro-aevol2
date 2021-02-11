@@ -1,18 +1,83 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\Abstract_ExpManager.cpp" />
-    <ClCompile Include="..\AeTime.cpp" />
-    <ClCompile Include="..\Dna.cpp" />
-    <ClCompile Include="..\DnaMutator.cpp" />
-    <ClCompile Include="..\ExpManager.cpp" />
     <ClCompile Include="..\main.cpp" />
-    <ClCompile Include="..\MutationEvent.cpp" />
-    <ClCompile Include="..\Organism.cpp" />
-    <ClCompile Include="..\Stats.cpp" />
-    <ClCompile Include="..\Threefry.cpp" />
+    <ClCompile Include="..\Threefry.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Stats.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AeTime.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Abstract_ExpManager.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MutationEvent.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dna.cpp">
+      <Filter>Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DnaMutator.cpp">
+      <Filter>Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ExpManager.cpp">
+      <Filter>Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Organism.cpp">
+      <Filter>Simulation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\aevol_constants.h" />
+    <ClInclude Include="..\Stats.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gaussian.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AeTime.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Abstract_ExpManager.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MutationEvent.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\RNA.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Protein.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dna.h">
+      <Filter>Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DnaMutator.h">
+      <Filter>Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ExpManager.h">
+      <Filter>Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Organism.h">
+      <Filter>Simulation</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{3c9c13e6-8bd4-48f0-a0f2-1e8d913b4bad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{fef670ab-f45b-45a6-9cab-455a7605aaca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Simulation">
+      <UniqueIdentifier>{1164b926-506c-449a-bae7-6ef9788555d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

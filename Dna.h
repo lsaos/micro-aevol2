@@ -10,47 +10,58 @@
 #include "Threefry.h"
 #include "aevol_constants.h"
 
+#ifdef OPTI_DNA_BITSET
+static_assert(NB_BASE == 2, "Bitset optimization currently only supports NB_BASE=2");
+#endif // OPTI_DNA_BITSET
+
 class Dna {
 
 public:
-    Dna() = default;
+#ifdef OPTI_DNA_BITSET
+	typedef std::vector<bool> SeqType; // std::vector<bool> is implemented as a bitset
+#else // OPTI_DNA_BITSET
+	typedef std::vector<char> SeqType;
+#endif // OPTI_DNA_BITSET
 
-    Dna(const Dna &clone) = default;
+	Dna() = default;
 
-    Dna(int length, Threefry::Gen &&rng);
+	Dna(const Dna& clone) = default;
 
-    ~Dna() = default;
+	Dna(int length, Threefry::Gen&& rng);
 
-    int length() const;
+	~Dna() = default;
+	void load(gzFile backup_file);
 
-    void save(gzFile backup_file);
+	void set(int pos, char c);
 
-    void load(gzFile backup_file);
+	/// Remove the DNA inbetween pos_1 and pos_2
+	void remove(int pos_1, int pos_2);
 
-    void set(int pos, char c);
+	/// Insert a sequence of a given length at a given position into the DNA of the Organism
+	void insert(int pos, SeqType seq);
 
-    /// Remove the DNA inbetween pos_1 and pos_2
-    void remove(int pos_1, int pos_2);
+	/// Insert a sequence of a given length at a given position into the DNA of the Organism
+	void insert(int pos, Dna* seq);
 
-    /// Insert a sequence of a given length at a given position into the DNA of the Organism
-    void insert(int pos, std::vector<char> seq);
+	void do_switch(int pos);
 
-    /// Insert a sequence of a given length at a given position into the DNA of the Organism
-    void insert(int pos, Dna *seq);
+	void do_duplication(int pos_1, int pos_2, int pos_3);
 
-    void do_switch(int pos);
+public:
+	int length() const;
 
-    void do_duplication(int pos_1, int pos_2, int pos_3);
+	void save(gzFile backup_file) const;
 
-    int promoter_at(int pos);
+	int promoter_at(int pos) const;
 
-    int terminator_at(int pos);
+	int terminator_at(int pos) const;
 
-    bool shine_dal_start(int pos);
+	bool shine_dal_start(int pos) const;
 
-    bool protein_stop(int pos);
+	bool protein_stop(int pos) const;
 
-    int codon_at(int pos);
+	int codon_at(int pos) const;
 
-    std::vector<char> seq_;
+private:
+	SeqType seq_;
 };
